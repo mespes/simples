@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Transaction } from '../models/transaction.model';
 import { map } from 'rxjs/operators';
+import { Transaction } from '../models/transaction.model';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,10 @@ export class TransactionsService {
         map((transactions: Array<any>) => 
           transactions.map(transaction => ({
             rowId: transaction[0],
-            date: new Date(transaction[1]),
+            date: moment(transaction[1]).format('MMMM D YYYY, HH:mm'),
             sender: transaction[2],
             receiver: transaction[3],
-            amount: transaction[4],
+            amount: transaction[4].toFixed(1),
             isSuccessful: !!transaction[5]
           }))
         )

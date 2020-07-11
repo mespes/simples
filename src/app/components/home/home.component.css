@@ -38,3 +38,21 @@
 .transaction-table .mat-cell {
   border-width: 0px;
 }
+
+.successful-transaction {
+  border-radius: 13px;
+  padding: 3px 10px 3px 10px;
+  color: #265e1a;
+  background: #d8f6ea;
+}
+
+.failed-transaction {
+  border-radius: 13px;
+  padding: 3px 10px 3px 10px;
+  color: #5e1a1a;
+  background: #f6d8d8;
+}
+
+.transaction-table .usd-value {
+  color: #949ba7;
+}

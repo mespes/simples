@@ -23,4 +23,12 @@ export class HomeComponent implements OnInit {
       )
       .subscribe((trans: any) => this.transactions = trans);
   }
+
+  convertTezosToUSD(tezos: number) {
+    return (tezos * 2.528896).toFixed(1);
+  }
+
+  getShortenedId(userId: string) {
+    return `${userId.slice(0, 2)}...${userId.slice(userId.length - 5)}`;
+  }
 }

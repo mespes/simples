@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UserService } from '../../services/user.service';
-import { UserInfo } from '../../models/user-info.model';
-import { ResourceStore } from '../../stores/resource.store';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { tap } from 'rxjs/operators';
+import { Transaction } from '../../models/transaction.model';
+import { TransactionsService } from '../../services/transactions.service';
 
 @Component({
   selector: 'app-home',
@@ -12,28 +10,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class HomeComponent implements OnInit {
 
-  userInfo$: Observable<UserInfo>;
-  resources$: Observable<any[]>;
+  transactions: Transaction[] = [];
 
   constructor(
-    private userService: UserService,
-    private resourceStore: ResourceStore,
-    private snackBar: MatSnackBar
-  ) { }
+    private transactionsService: TransactionsService
+  ) {}
 
   ngOnInit(): void {
-    this.userInfo$ = this.userService.userInfo$;
-    this.resources$ = this.resourceStore.resources$;
-    this.resources$.subscribe(
-      resources => console.log(resources)
-    );
-  }
-
-  fileInputChanged(event) {
-    console.log(event.target);
-  }
-
-  openSnackBar(text) {
-    this.snackBar.open(text, 'some action', { duration: 2000 });
+    this.transactionsService.getTransactions()
+      .pipe(
+        tap(trans => console.log(trans))
+      )
+      .subscribe((trans: any) => this.transactions = trans);
   }
 }
